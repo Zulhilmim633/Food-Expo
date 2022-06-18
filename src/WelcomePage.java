@@ -66,8 +66,10 @@ public class WelcomePage extends JFrame implements ActionListener {
         if(e.getSource() == nextBtn){
             if(group.getSelection().getActionCommand().equalsIgnoreCase("compete")){
                 Compete compete = new Compete();
+                dispose();
             }else if(group.getSelection().getActionCommand().equalsIgnoreCase("visitor")){
                 Visitor visitor = new Visitor();
+                dispose();
             }
         }
     }
