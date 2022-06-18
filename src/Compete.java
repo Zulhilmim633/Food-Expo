@@ -22,6 +22,7 @@ public class Compete extends JFrame implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		Compete frame = new Compete();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -114,6 +115,10 @@ public class Compete extends JFrame implements ActionListener {
 			dispose();
 			WelcomePage frame1 = new WelcomePage();
 			frame1.setVisible(true);
+		}else if(e.getSource() == btnNext){
+			Ticket next = new Ticket();
+			dispose();
+			next.setVisible(true);
 		}
 	}
 }
