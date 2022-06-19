@@ -60,21 +60,25 @@ public class WelcomePage extends JFrame implements ActionListener {
 		setBounds(100, 100, 450, 300);
         setSize(329,268);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 	}
 
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) throws NullPointerException{
         if(e.getSource() == nextBtn){
-            if(group.getSelection() == null){
-                JOptionPane.showMessageDialog(null,"Need selection","Error", JOptionPane.ERROR_MESSAGE);
-            }else if(group.getSelection().getActionCommand().equalsIgnoreCase("compete")){
-                Compete compete = new Compete();
-                compete.setVisible(true);
-                dispose();
-            }else if(group.getSelection().getActionCommand().equalsIgnoreCase("visitor")){
-                Visitor visitor = new Visitor();
-                visitor.setVisible(true);
-                dispose();
-            }                
+            try {
+                if(group.getSelection().getActionCommand().equalsIgnoreCase("compete")){
+                    Compete compete = new Compete();
+                    compete.setVisible(true);
+                    dispose();
+                }else if(group.getSelection().getActionCommand().equalsIgnoreCase("visitor")){
+                    Visitor visitor = new Visitor();
+                    visitor.setVisible(true);
+                    dispose();
+                }                
+                
+            } catch (NullPointerException ex) {
+                JOptionPane.showMessageDialog(null,"Need selection","Needed", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
 }
