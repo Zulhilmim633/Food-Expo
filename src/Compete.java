@@ -144,11 +144,15 @@ public class Compete extends JFrame implements ActionListener {
 					String optional = "";
 					for (int i = 0; i < allCheckBoxs.length; i++) {
 						if(allCheckBoxs[i].isSelected()){
-							optional += allCheckBoxs[i].getActionCommand()+", ";
+							optional += allCheckBoxs[i].getActionCommand()+",";
 						}
 					}
+					if(optional != ""){
+						optional = optional.substring(0,(optional.length()-1));
+
+					}
 					dispose();
-					Customer next = new Customer("compete",Store,Store_type,optional);
+					Customer next = new Customer("Compete",Store,Store_type,optional);
 					next.setVisible(true);
 				}else{
 					JOptionPane.showMessageDialog(null, "Need Store name","No Store Name",JOptionPane.WARNING_MESSAGE);
