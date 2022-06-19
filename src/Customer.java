@@ -72,6 +72,7 @@ public class Customer extends JFrame implements ActionListener {
 		cont.add(txtArea);
 		cont.add(btnHome);
 		
+		setResizable(false);
 		setBounds(100, 100, 282, 317);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
