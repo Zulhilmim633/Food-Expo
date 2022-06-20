@@ -121,11 +121,10 @@ public class Visitor extends JFrame implements ActionListener{
 					optional += "Healthy,";
 					count++;
 				}
-				optional = optional.substring(0,(optional.length()-1));
-			
 				
 				if(atleast1){
 					dispose();
+					optional = optional.substring(0,(optional.length()-1));
 					Customer nextFrame = new Customer("Visitor", name, age, optional,""+count);
 					nextFrame.setVisible(true);	
 				}else{
