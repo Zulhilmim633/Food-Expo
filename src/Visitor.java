@@ -102,6 +102,7 @@ public class Visitor extends JFrame implements ActionListener{
 		if(e.getSource() == btnNext){
 			String name = txtname.getText();
 			String age = txtage.getText();
+			
 			if(name.equalsIgnoreCase("") || age.equalsIgnoreCase("")){
 				JOptionPane.showMessageDialog(null,"Need to enter name and age", "Needed", JOptionPane.WARNING_MESSAGE);
 			}else{

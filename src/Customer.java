@@ -36,6 +36,7 @@ public class Customer extends JFrame implements ActionListener {
 				zone = "c";
 			}
 			receipt += "         Welcome to Food Expo\n--------------------------------------------------------\nStore : "+store_name+"\nStore Type : "+store_type+"\nRequest : "+optional+"\nZone : "+zone+"\n--------------------------------------------------------\n         Thank You For Coming";			
+			
 		}else if(args[0].equalsIgnoreCase("visitor")){
 			String name = args[1];
 			String age = args[2];

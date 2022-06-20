@@ -92,7 +92,6 @@ public class Compete extends JFrame implements ActionListener {
 		healthyradbtn.setBounds(229, 277, 74, 23);
 		healthyradbtn.setActionCommand("Healthy");
 		
-		
 		grp1 = new ButtonGroup();
 		grp1.add(beverageradbtn);
 		grp1.add(foodradbtn);
