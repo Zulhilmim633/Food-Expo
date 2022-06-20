@@ -64,7 +64,7 @@ public class Customer extends JFrame implements ActionListener {
 		txtArea.setEditable(false);
 		txtArea.setBounds(20, 36, 227, 198);
 		
-		btnHome = new JButton("BACK TO WECOMEPAGE");
+		btnHome = new JButton("BACK TO WELCOMEPAGE");
 		btnHome.setBounds(40, 245, 185, 23);
 
 		btnHome.addActionListener(this);
@@ -76,10 +76,6 @@ public class Customer extends JFrame implements ActionListener {
 		setBounds(100, 100, 282, 317);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-
-	// public void Frame1(String Store_name, String Store_type, String... optional){
-
-	// }
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnHome){
