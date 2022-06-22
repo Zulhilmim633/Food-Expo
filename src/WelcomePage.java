@@ -26,9 +26,9 @@ public class WelcomePage extends JFrame implements ActionListener {
         cont = getContentPane();
         getContentPane().setLayout(null);
 
-        label1 = new JLabel("Welcome To Food Expo");
+        label1 = new JLabel("Welcome To Food Expo 2022");
         label1.setFont(new Font("Tahoma", Font.BOLD, 18));
-        label1.setBounds(57, 38, 211, 34);
+        label1.setBounds(31, 38, 295, 34);
 
         label2 = new JLabel("You're :");
         label2.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -65,14 +65,18 @@ public class WelcomePage extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) throws NullPointerException{
         if(e.getSource() == nextBtn){
-            try {
+            try { // try catch some error if not choosing
                 if(group.getSelection().getActionCommand().equalsIgnoreCase("compete")){
+                	//open new frame
                     Compete compete = new Compete();
                     compete.setVisible(true);
+                    //exit current frame
                     dispose();
                 }else if(group.getSelection().getActionCommand().equalsIgnoreCase("visitor")){
+                	//open new frame
                     Visitor visitor = new Visitor();
                     visitor.setVisible(true);
+                    //exit current frame
                     dispose();
                 }                
                 

@@ -1,17 +1,27 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.text.DecimalFormat;
+
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class Visitor extends JFrame implements ActionListener{
 
 	private Container cont;
-	private JTextField txtname, txtage;
 	private JPanel panel;
-	private JLabel lblName, lblAge, beverageIcon, foodIcon, healthyIcon;
+	private JLabel beverageIcon, foodIcon, healthyIcon;
 	private JCheckBox beverageCheckBox, foodCheckBox, healthycCheckBox;
 	private JButton btnBack, btnNext;
+	private JLabel lblAdult;
+	private JSpinner spinner_1;
+	private JLabel lblChild;
+	private JSpinner spinner;
+	private JLabel lbltotal;
+	private JLabel lblpricetotal;
+	private DecimalFormat format;
 	
 	/**
 	 * Launch the application.
@@ -28,19 +38,7 @@ public class Visitor extends JFrame implements ActionListener{
 		super("Visitor");
 		cont = getContentPane();
 		cont.setLayout(null);
-		
-		lblName = new JLabel("Name :");
-		lblName.setBounds(21, 26, 49, 14);
-		
-		txtname = new JTextField();
-		txtname.setBounds(80, 23, 240, 20);
-		txtname.setColumns(10);
-		
-		lblAge = new JLabel("Age :");
-		lblAge.setBounds(21, 58, 49, 14);
-		
-		txtage = new JTextField();
-		txtage.setBounds(80, 58, 22, 20);
+		format = new DecimalFormat("##0.00");
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 1, true), "What you like to see ?  ", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -71,13 +69,20 @@ public class Visitor extends JFrame implements ActionListener{
 		healthycCheckBox.setBounds(136, 236, 99, 23);
 		
 		btnBack = new JButton("BACK");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				WelcomePage frame1 = new WelcomePage();
+				frame1.setVisible(true);
+			}
+		});
 		btnBack.setBounds(51, 426, 89, 23);
 		
-		btnNext = new JButton("NEXT");
+		btnNext = new JButton("PAY");
+		btnNext.addActionListener(this);
 		btnNext.setBounds(193, 426, 89, 23);
 		
-		btnBack.addActionListener(this);
-		btnNext.addActionListener(this);
+		
 		
 		panel.add(beverageIcon);
 		panel.add(beverageCheckBox);
@@ -86,25 +91,58 @@ public class Visitor extends JFrame implements ActionListener{
 		panel.add(healthyIcon);
 		panel.add(healthycCheckBox);
 		cont.add(panel);
-		cont.add(lblName);
-		cont.add(txtname);
-		cont.add(lblAge);
-		cont.add(txtage);
 		cont.add(btnBack);
 		cont.add(btnNext);
+		
+		lblAdult = new JLabel("Adult (RM 15) :");
+		lblAdult.setBounds(21, 28, 91, 14);
+		getContentPane().add(lblAdult);
+		
+		lblpricetotal = new JLabel("0 RM");
+		lblpricetotal.setBounds(270, 41, 93, 14);
+		
+		spinner_1 = new JSpinner();
+		spinner_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				int adult = (Integer) spinner_1.getValue();
+				int child = (Integer) spinner.getValue();
+				lblpricetotal.setText(format.format(((adult * 15)+(child * 10)))+" RM");
+			}
+		});
+		spinner_1.setBounds(122, 28, 30, 20);
+		getContentPane().add(spinner_1);
+		
+		lblChild = new JLabel("Child (RM 10) :");
+		lblChild.setBounds(21, 53, 91, 14);
+		getContentPane().add(lblChild);
+		
+		spinner = new JSpinner();
+		spinner.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				int adult = (Integer) spinner_1.getValue();
+				int child = (Integer) spinner.getValue();
+				lblpricetotal.setText(format.format(((adult * 15)+(child * 10)))+" RM");
+			}
+		});
+		spinner.setBounds(122, 53, 30, 20);
+		getContentPane().add(spinner);
+		
+		lbltotal = new JLabel("Total to pay :");
+		lbltotal.setBounds(175, 41, 85, 14);
+		getContentPane().add(lbltotal);
+		getContentPane().add(lblpricetotal);
 		
 		setBounds(100, 100, 355, 550);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 	}
 
-	public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnNext){
-			String name = txtname.getText();
-			String age = txtage.getText();
-			
-			if(name.equalsIgnoreCase("") || age.equalsIgnoreCase("")){
-				JOptionPane.showMessageDialog(null,"Need to enter name and age", "Needed", JOptionPane.WARNING_MESSAGE);
+			int adult = (Integer) spinner_1.getValue();
+			int child = (Integer) spinner.getValue();
+			if(adult == 0 && child == 0){
+				JOptionPane.showMessageDialog(null, "Please insert total person","No person",JOptionPane.ERROR_MESSAGE);
 			}else{
 				boolean atleast1 = false;
 				String optional = "";
@@ -124,18 +162,18 @@ public class Visitor extends JFrame implements ActionListener{
 				}
 				
 				if(atleast1){
+					double price = (adult * 15)+(child * 10);
 					dispose();
 					optional = optional.substring(0,(optional.length()-1));
-					Customer nextFrame = new Customer("Visitor", name, age, optional,""+count);
+					Customer nextFrame = new Customer("Visitor", ""+adult, ""+child, optional,""+count,format.format(price)+" RM");
 					nextFrame.setVisible(true);	
 				}else{
 					JOptionPane.showMessageDialog(null, "Please Choose atleast 1","What you like to see ?",JOptionPane.INFORMATION_MESSAGE);
 				}
+
 			}
-		}else if(e.getSource() == btnBack){
-			dispose();
-			WelcomePage frame1 = new WelcomePage();
-			frame1.setVisible(true);
+			}
+			
 		}
 	}
-}
+	

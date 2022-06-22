@@ -2,7 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+
 import java.awt.event.*;
+import java.text.DecimalFormat;
+
 import javax.swing.border.LineBorder;
 
 public class Compete extends JFrame implements ActionListener {
@@ -10,13 +13,14 @@ public class Compete extends JFrame implements ActionListener {
 	private Container cont;
 	private JPanel contentpane;
 	private TitledBorder border;
-	private JLabel lblStoreName, lblStoreType, beverageIcon, foodIcon, healthyIcon;
+	private JLabel lblStoreName, lblStoreType, beverageIcon, foodIcon, healthyIcon, lblDeposit, lbldeposittotal;
 	private JTextField txtStore;
 	private JRadioButton beverageradbtn, foodradbtn, healthyradbtn;
 	private ButtonGroup grp1;
 	private JCheckBox chkbxSink, chkbxElectric, chkbxStove;
 	private JButton btnBack, btnNext;
 	private JCheckBox allCheckBoxs[] = new JCheckBox[3];
+	private DecimalFormat format;
 
 	/**
 	 * Launch the application.
@@ -33,6 +37,8 @@ public class Compete extends JFrame implements ActionListener {
 		super("Competing");
 		cont = getContentPane();
 		cont.setLayout(null);
+		
+		format = new DecimalFormat("##0.00");
 
 		lblStoreName = new JLabel("Store Name :");
 		lblStoreName.setSize(82, 20);
@@ -45,15 +51,57 @@ public class Compete extends JFrame implements ActionListener {
 		contentpane.setLocation(375, 24);
 		contentpane.setLayout(null);
 		
+		lbldeposittotal = new JLabel("10.00 RM");
+		lbldeposittotal.setBounds(430, 207, 67, 14);
+		
 		chkbxSink = new JCheckBox("Need Sink");
+		chkbxSink.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(chkbxSink.isSelected()) {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit += 20.0;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}else {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit -= 20.0;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}
+			}
+		});
 		chkbxSink.setActionCommand("Need Sink");
 		chkbxSink.setBounds(20, 35, 128, 17);
 		
 		chkbxElectric = new JCheckBox("Need Extra Electric");
+		chkbxElectric.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(chkbxElectric.isSelected()) {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit += 40;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}else {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit -= 40;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}
+			}
+		});
 		chkbxElectric.setActionCommand("Need Extra Electric");
 		chkbxElectric.setBounds(20, 64, 152, 17);
 		
 		chkbxStove = new JCheckBox("Need Stove");
+		chkbxStove.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if(chkbxStove.isSelected()) {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit += 50;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}else {
+					double deposit = Double.parseDouble(lbldeposittotal.getText().replace(" RM", ""));
+					deposit -= 50;
+					lbldeposittotal.setText(format.format(deposit)+" RM");
+				}
+			}
+		});
 		chkbxStove.setActionCommand("Need Stove");
 		chkbxStove.setBounds(20, 93, 128, 17);
 		
@@ -101,7 +149,7 @@ public class Compete extends JFrame implements ActionListener {
 		btnBack.setBounds(375, 277, 89, 23);
 		btnBack.addActionListener(this);
 		
-		btnNext = new JButton("NEXT");
+		btnNext = new JButton("PAY");
 		btnNext.setBounds(497, 277, 89, 23);
 		btnNext.addActionListener(this);
 		
@@ -124,6 +172,12 @@ public class Compete extends JFrame implements ActionListener {
 		allCheckBoxs[0] = chkbxSink;
 		allCheckBoxs[1] = chkbxElectric;
 		allCheckBoxs[2] = chkbxStove;
+		
+		lblDeposit = new JLabel("Deposit : ");
+		lblDeposit.setBounds(375, 207, 67, 14);
+		getContentPane().add(lblDeposit);
+		
+		getContentPane().add(lbldeposittotal);
 
 		setBounds(100, 100, 639, 368);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -148,10 +202,10 @@ public class Compete extends JFrame implements ActionListener {
 					}
 					if(optional != ""){
 						optional = optional.substring(0,(optional.length()-1));
-
 					}
+					String price = lbldeposittotal.getText();
 					dispose();
-					Customer next = new Customer("Compete",Store,Store_type,optional);
+					Customer next = new Customer("Compete",Store,Store_type,optional,price);
 					next.setVisible(true);
 				}else{
 					JOptionPane.showMessageDialog(null, "Need Store name","No Store Name",JOptionPane.WARNING_MESSAGE);
